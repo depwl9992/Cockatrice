@@ -28,6 +28,15 @@ matrix:
     os: osx
     osx_image: xcode8
     env: BUILDTYPE=Release
+  #Windows TEST
+  - name: Windows (Debug)
+    if: tag IS NOT present
+    os: windows
+    env: BUILDTYPE=Debug
+  - name: Windows (Release)
+    if: (branch = master AND NOT type = pull_request) OR tag IS present
+    os: windows
+    env: BUILDTYPE=Release
 
 #install dependencies for container-based "linux" builds
 addons:
