@@ -5,7 +5,7 @@ matrix:
   include:
   #Ubuntu Xenial (Debug only)
   - name: clang-format Check
-    if: branch IS NOT master
+    if: NOT branch = master
     os: linux
     dist: xenial
     group: stable
