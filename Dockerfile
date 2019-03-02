@@ -12,7 +12,15 @@ RUN apt-get update && apt-get install -y\
   qt5-default\
   qtbase5-dev\
   qttools5-dev-tools\
-  qttools5-dev
+  qttools5-dev\
+  qtsvg5-dbg\
+  libqt5svg5-dev\
+  libqt5svg5\
+  qtmultimedia5-dev\
+  libqt5multimedia5-plugins\
+  libqt5multimediaquick-p5\
+  libqt5multimediawidgets5\
+  qt5multimedia
 
 COPY . /home/servatrice/code/
 WORKDIR /home/servatrice/code
