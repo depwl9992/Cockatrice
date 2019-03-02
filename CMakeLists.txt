@@ -228,7 +228,7 @@ endif()
 include(CPack)
 
 # Compile servatrice (default off)
-option(WITH_SERVER "build servatrice" OFF)
+option(WITH_SERVER "build servatrice" ON)
 add_subdirectory(common)
 if(WITH_SERVER)
     add_subdirectory(servatrice)
