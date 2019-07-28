@@ -144,3 +144,58 @@ Find more information on how to use Servatrice with Docker in our [wiki](https:/
 # License [![GPLv2 License](https://img.shields.io/github/license/Cockatrice/Cockatrice.svg)](https://github.com/Cockatrice/Cockatrice/blob/master/LICENSE)
 
 Cockatrice is free software, licensed under the [GPLv2](https://github.com/Cockatrice/Cockatrice/blob/master/LICENSE).
+
+# depwl9992's specific non-docker build instructions
+
+- cd to the project root directory.
+- Open `Dockerfile` and install apt packages via the shell command:
+   
+      apt-get update && apt-get install -y\
+      build-essential\
+      cmake\
+      git\
+      libprotobuf-dev\
+      libqt5sql5-mysql\
+      libqt5websockets5-dev\
+      protobuf-compiler\
+      qt5-default\
+      qtbase5-dev\
+      qttools5-dev-tools\
+      qttools5-dev
+      
+- Manually run compile commands as shown above:
+
+      mkdir build
+      cd build
+      cmake ..
+      make
+      make install
+      
+- Note the `build/servatrice/servatrice` binary is now avaialble. Running this will attempt to load `servatrice.ini` from `/home/<user>/.local/scripts/servatrice/servatrice.ini` or some such. To load your own file (we're still in the `build/` directory):
+
+      cp servatrice/servatrice.ini.example ./servatrice.ini
+      nano servatrice.ini
+      <edit as necessary>
+      ./servatrice --config ./servatrice.ini
+      
+- The copy of Servatrice for my setup is using mysql which I set up as a separate database originally. To configure servatrice.ini to handle this, I set the following options different from the default:
+
+      [server]
+      name="TFG Servatrice"
+      [authentication]
+      method=sql
+      [registration]
+      enabled=true
+      requireemail=true
+      requireemailactivation=true
+      [smtp]
+      connection=ssl
+      [database]
+      type=mysql
+      password=<my db password>
+      
+- Normally Docker would handle running this as a background process. However, I am not even remotely into setting up Docker (as I see it, a full system to sit on top of the OS and run things nicely, but with a lot of overhead) if I can help it. Instead, I prefer screen, run from a bash file.
+
+      #!/bin/sh
+      screen -dmS Servatrice ./servatrice --config ./servatrice.ini
+      echo "Starting servatrice with servatrice.ini"
